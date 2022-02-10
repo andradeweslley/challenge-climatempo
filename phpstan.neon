@@ -1,0 +1,27 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+parameters:
+    checkMissingIterableValueType: false
+    level: max
+    paths:
+        - app
+        - config
+        - database
+        - public
+        - routes
+        - tests
+    excludePaths:
+        - app/Console/Commands*
+    bootstrapFiles:
+        # - app/helpers.php
+    ignoreErrors:
+        - '#Cannot call method [a-zA-Z0-9_()]+ on [a-zA-Z0-9<>_\|\\]+.#'
+        # - '#Property App\\Models\\v1\\[a-zA-Z0-9_:()\$\\]+ has no typehint specified.#'
+        # - '#Method App\\Models\\v1\\[a-zA-Z0-9_:()]+ has no return typehint specified.#'
+        # - '#Call to method basePath\(\) on an unknown class Illuminate\\Foundation\\Application.#'
+        - '#Parameter \#[0-9]+ \$[a-zA-Z0-9_]+ of [static method|method|function]+ [a-zA-Z0-9_:()\\]+ expects [a-zA-Z0-9\|_]+, [a-zA-Z0-9\|_]+ given.#'
+        - '#Undefined variable: \$this#'
+        - '#Cannot access property \$[a-zA-Z0-9_]+ on mixed.#'
+        - '#Access to an undefined property App\\Http\\Resources\\[a-zA-Z0-9_]+Resource::\$[a-zA-Z0-9_]+.#'
+        - '#Access to an undefined property App\\Models\\[a-zA-Z0-9_]+|Illuminate\\Database\\Eloquent\\Collection<App\\Models\\[a-zA-Z0-9_]+>::\$[a-zA-Z0-9_]+.#'
+        - "#Cannot access offset [a-zA-Z0-9_']+ on mixed.#"

@@ -1,0 +1,24 @@
+grumphp:
+  git_hook_variables:
+    EXEC_GRUMPHP_COMMAND: 'docker exec clima-tempo'
+  stop_on_failure: false
+  process_timeout: 300
+  fixer:
+    enabled: false
+    fix_by_default: false
+  tasks:
+    clover_coverage:
+      clover_file: tests/_output/logs/clover.xml
+      level: 90
+    composer: ~
+    phpcs:
+      # report: code
+      metadata:
+        priority: 2
+    phpstan:
+      metadata:
+        priority: 2
+    phpunit:
+      always_execute: true
+      metadata:
+        priority: 1

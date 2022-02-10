@@ -1,0 +1,59 @@
+version: '3.1'
+
+services:
+    
+    es-clima-tempo:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+        container_name: es-clima-tempo
+        hostname: es-clima-tempo
+        environment:
+            - discovery.type=single-node
+        restart: unless-stopped
+        ports:
+            - 9200:9200
+            - 9300:9300
+        volumes:
+            - elasticsearch:/usr/share/elasticsearch/data
+        networks:
+            - default
+    
+    db-clima-tempo:  
+        image: mysql
+        container_name: db-clima-tempo
+        hostname: db-clima-tempo
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: clima-tempo
+        restart: unless-stopped
+        ports:
+            - "3308:3306"
+        expose:
+            - "3308"
+        volumes:
+            - mysql-data:/var/lib/mysql
+        networks:
+          - default
+
+    clima-tempo:
+        build:
+            context: .
+            dockerfile:  Dockerfile
+        container_name: clima-tempo
+        hostname: clima-tempo
+        restart: unless-stopped
+        volumes:
+            - ./:/var/www/html
+        ports:
+            - "8000:8000"
+        depends_on:
+            - db-clima-tempo
+            - es-clima-tempo
+        networks:
+            - default
+            
+volumes:
+    mysql-data:
+    elasticsearch:
+
+networks:
+    default:
